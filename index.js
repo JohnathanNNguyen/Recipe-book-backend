@@ -1,3 +1,8 @@
+process.on("unhandledRejection", (error, p) => {
+  console.log("=== UNHANDLED REJECTION ===");
+  console.log(error, p);
+});
+
 // Express is the Node framework that we're using to make our endpoints and middleware
 const express = require("express");
 
@@ -118,7 +123,7 @@ app.post("/log-in", async function (req, res) {
     );
 
     if (!user) {
-      res.json({
+      return res.json({
         data: null,
         error: true,
         msg: "Email not found",
@@ -140,13 +145,13 @@ app.post("/log-in", async function (req, res) {
 
       const encodedUser = jwt.sign(payload, process.env.JWT_KEY);
 
-      res.json({
+      return res.json({
         data: encodedUser,
         error: false,
         msg: "",
       });
     } else {
-      res.json({
+      return res.json({
         data: null,
         error: true,
         msg: "Password not found",
@@ -272,7 +277,6 @@ app.delete("/delete-recipe/:id", async function (req, res) {
     res.json("Error deleting recipe");
   }
 });
-// app.listen(port);
-app.listen(port, () => console.log(`listening at http://localhost:${port}`));
+app.listen(port, () => console.log(`listening at PORT: ${port}`));
 
 // Noderecipe-env
