@@ -272,7 +272,7 @@ app.delete("/delete-recipe/:id", async function (req, res) {
     res.json("Error deleting recipe");
   }
 });
-app.listen(port);
-// app.listen(port, () => console.log(`listening at http://localhost:${port}`));
+// app.listen(port);
+app.listen(port, () => console.log(`listening at http://localhost:${port}`));
 
 // Noderecipe-env
