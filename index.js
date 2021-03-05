@@ -7,7 +7,7 @@ const bodyParser = require("body-parser");
 // jsonwebtoken is what we use to encode and decode objects to use as authentication tokens
 const jwt = require("jsonwebtoken");
 // bcryt is what we use to encode and decode passwords
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 
 // cors is something else that wee need to run in our middleware
 const cors = require("cors");
@@ -274,3 +274,5 @@ app.delete("/delete-recipe/:id", async function (req, res) {
 });
 
 app.listen(port, () => console.log(`listening at http://localhost:${port}`));
+
+// Noderecipe-env
