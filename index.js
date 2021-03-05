@@ -21,7 +21,7 @@ const app = express();
 // We import and immediately load the `.env` file. We need to run this before we can use `process.env`
 require("dotenv").config();
 
-const port = process.env.PORT;
+const port = process.env.PORT || 3000;
 
 const pool = mysql.createPool({
   host: process.env.DB_HOST,
