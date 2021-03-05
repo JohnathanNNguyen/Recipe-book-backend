@@ -64,7 +64,6 @@ app.use(bodyParser.json());
 app.post("/register", async function (req, res) {
   try {
     let user;
-
     // Hashes the password and inserts the info into the `user` table
     await bcrypt.hash(req.body.password, 10).then(async (hash) => {
       try {
@@ -83,7 +82,7 @@ app.post("/register", async function (req, res) {
 
         console.log("user", user);
       } catch (error) {
-        res.json("Error creating user");
+        return res.json("Error creating user");
         console.log("error", error);
       }
     });
@@ -99,10 +98,10 @@ app.post("/register", async function (req, res) {
     res.json({
       data: encodedUser,
       error: false,
-      msg: "",
+      msg: "Account created",
     });
   } catch (err) {
-    res.json({
+    return res.json({
       data: null,
       error: true,
       msg: "Error, please try again",
@@ -158,7 +157,7 @@ app.post("/log-in", async function (req, res) {
       });
     }
   } catch (err) {
-    res.json({
+    return res.json({
       data: null,
       error: true,
       msg: "Error logging in",
@@ -215,7 +214,7 @@ app.get("/recipes", async function (req, res) {
       }
     );
 
-    res.json({
+    return res.json({
       data: recipes,
       error: false,
       msg: "",
@@ -252,7 +251,7 @@ app.put("/save", async function (req, res) {
       }
     );
 
-    res.json("/save success!");
+    return res.json("/save success!");
   } catch (err) {
     console.log("Error in /save/recipe", err);
     res.json("Error saving recipe");
