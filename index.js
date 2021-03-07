@@ -58,7 +58,6 @@ app.use(async function mysqlConnection(req, res, next) {
 });
 
 app.use(cors());
-
 app.use(bodyParser.json());
 
 app.post("/register", async function (req, res) {
@@ -127,6 +126,7 @@ app.post("/log-in", async function (req, res) {
         error: true,
         msg: "Email not found",
       });
+      return;
     }
 
     const userPassword = `${user.password}`;
@@ -217,7 +217,7 @@ app.get("/recipes", async function (req, res) {
     return res.json({
       data: recipes,
       error: false,
-      msg: "",
+      msg: "Fetched recipes",
     });
   } catch (err) {
     console.log("Error in /recipes", err);
@@ -277,5 +277,3 @@ app.delete("/delete-recipe/:id", async function (req, res) {
   }
 });
 app.listen(port, () => console.log(`listening at PORT: ${port}`));
-
-// Noderecipe-env
