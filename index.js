@@ -1,8 +1,3 @@
-process.on("unhandledRejection", (error, p) => {
-  console.log("=== UNHANDLED REJECTION ===");
-  console.log(error, p);
-});
-
 // Express is the Node framework that we're using to make our endpoints and middleware
 const express = require("express");
 
@@ -38,6 +33,8 @@ const pool = mysql.createPool({
 
 // The `use` functions are the middleware - they get called before an endpoint is hit
 app.use(async function mysqlConnection(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Content-Type", "application/json");
   try {
     req.db = await pool.getConnection();
     req.db.connection.config.namedPlaceholders = true;
