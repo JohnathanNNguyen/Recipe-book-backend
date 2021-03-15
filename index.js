@@ -31,11 +31,22 @@ const pool = mysql.createPool({
   port: process.env.DB_PORT,
 });
 
+app.use(
+  cors({
+    "Access-Control-Allow-Origin": "*",
+    origin: "https://recipe-book-29eda.web.app",
+  })
+);
+app.use(bodyParser.json());
 // The `use` functions are the middleware - they get called before an endpoint is hit
 app.use(async function mysqlConnection(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Content-Type", "application/json");
   try {
+    // res.header("Access-Control-Allow-Origin", "*");
+    // res.header("Access-Control-Allow-Methods", "DELETE, PUT");
+    // res.header(
+    //   "Access-Control-Allow-Headers",
+    //   "Origin, X-Requested-With, Content-Type, Accept"
+    // );
     req.db = await pool.getConnection();
     req.db.connection.config.namedPlaceholders = true;
 
@@ -53,9 +64,6 @@ app.use(async function mysqlConnection(req, res, next) {
     throw err;
   }
 });
-
-app.use(cors());
-app.use(bodyParser.json());
 
 app.post("/register", async function (req, res) {
   try {
