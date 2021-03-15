@@ -1,3 +1,4 @@
+// const http = require("http");
 // Express is the Node framework that we're using to make our endpoints and middleware
 const express = require("express");
 
@@ -11,6 +12,7 @@ const bcrypt = require("bcryptjs");
 
 // cors is something else that wee need to run in our middleware
 const cors = require("cors");
+// const http = require("http");
 
 // The package that we use to connect to a mySQL database
 const mysql = require("mysql2/promise");
@@ -31,22 +33,30 @@ const pool = mysql.createPool({
   port: process.env.DB_PORT,
 });
 
-app.use(
-  cors({
-    "Access-Control-Allow-Origin": "*",
-    origin: "https://recipe-book-29eda.web.app",
-  })
-);
+// app.use(
+//   cors({
+//     "Access-Control-Allow-Origin": "*",
+//     origin: "https://recipe-book-29eda.web.app",
+//   })
+// );
+app.use(cors());
 app.use(bodyParser.json());
+// app.use((req, res, next) => {
+//   res.setHeader("Access-Control-Allow-Origin", "*");
+//   res.setHeader(
+//     "Access-Control-Allow-Headers",
+//     "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+//   );
+//   res.setHeader(
+//     "Access-Control-Allow-Methods",
+//     "GET, POST, PATCH, PUT, DELETE, OPTIONS"
+//   );
+//   next();
+// });
+
 // The `use` functions are the middleware - they get called before an endpoint is hit
 app.use(async function mysqlConnection(req, res, next) {
   try {
-    // res.header("Access-Control-Allow-Origin", "*");
-    // res.header("Access-Control-Allow-Methods", "DELETE, PUT");
-    // res.header(
-    //   "Access-Control-Allow-Headers",
-    //   "Origin, X-Requested-With, Content-Type, Accept"
-    // );
     req.db = await pool.getConnection();
     req.db.connection.config.namedPlaceholders = true;
 
@@ -281,4 +291,12 @@ app.delete("/delete-recipe/:id", async function (req, res) {
     res.json("Error deleting recipe");
   }
 });
+
+// const server = http.createServer(app);
+// server.on("error", onError);
+// server.on("listening", onListening);
+// server.listen(port);
+
 app.listen(port, () => console.log(`listening at PORT: ${port}`));
+
+// module.exports = app;
