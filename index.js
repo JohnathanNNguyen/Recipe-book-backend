@@ -34,10 +34,6 @@ const pool = mysql.createPool({
 app.use(cors());
 app.use(bodyParser.json());
 
-app.get("/", (req, res) => {
-  res.send("hello world!");
-});
-
 // app.use((req, res, next) => {
 //   res.setHeader("Access-Control-Allow-Origin", "*");
 //   res.setHeader(
