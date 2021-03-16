@@ -1,0 +1,22 @@
+{
+  "env": {
+    "DB_HOST": {
+      "value": "recipe-book.cofnrwgyqzgk.us-west-1.rds.amazonaws.com"
+    },
+    "DB_USER": {
+      "value": "recipeMaster"
+    },
+    "DB_PASSWORD": {
+      "value": "Saveen33"
+    },
+    "DB_NAME": {
+      "value": "recipebook"
+    },
+    "DB_PORT": {
+      "value": "3306"
+    },
+    "JWT_KEY": {
+      "value": "jwt_key"
+    }
+  }
+}

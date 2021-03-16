@@ -31,22 +31,24 @@ const pool = mysql.createPool({
   port: process.env.DB_PORT,
 });
 
-app.use(
-  cors({
-    "Access-Control-Allow-Origin": "*",
-    origin: "https://recipe-book-29eda.web.app",
-  })
-);
+app.use(cors());
 app.use(bodyParser.json());
+
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+  );
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET, POST, PATCH, PUT, DELETE, OPTIONS"
+  );
+  next();
+});
 // The `use` functions are the middleware - they get called before an endpoint is hit
 app.use(async function mysqlConnection(req, res, next) {
   try {
-    // res.header("Access-Control-Allow-Origin", "*");
-    // res.header("Access-Control-Allow-Methods", "DELETE, PUT");
-    // res.header(
-    //   "Access-Control-Allow-Headers",
-    //   "Origin, X-Requested-With, Content-Type, Accept"
-    // );
     req.db = await pool.getConnection();
     req.db.connection.config.namedPlaceholders = true;
 
